@@ -1,21 +1,16 @@
 const express = require("express");
 const dotenv = require("dotenv");
 
+const authRoutes = require("./routes/auth.route");
+const messageRoutes = require("./routes/message.route");
+
 dotenv.config();
+
 const PORT = process.env.PORT || 3000;
 
 const app = express();
 
-app.get("/api/auth/signup", (req, res) => {
-  res.send("Signup endpoint");
-});
+app.use("/api/auth", authRoutes);
+app.use("/api/messages", messageRoutes);
 
-app.get("/api/auth/login", (req, res) => {
-  res.send("Login endpoint");
-});
-
-app.get("/api/auth/logout", (req, res) => {
-  res.send("Logout endpoint");
-});
-
-app.listen(PORT, () => console.log("Server is running on port: ", PORT));
+app.listen(PORT, () => console.log("Server is running on port:", PORT));
