@@ -5,21 +5,23 @@ const path = require("path");
 const authRoutes = require("./routes/auth.route");
 const messageRoutes = require("./routes/message.route");
 
-dotenv.config();
+dotenv.config({ path: path.join(__dirname, ".env") }); // point the exact path where the env is located.
 
 const PORT = process.env.PORT || 3000;
 
 const app = express();
-const __dirname = path.resolve();
+const _dirname = path.resolve();
 
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+  const frontEndPath = path.join(_dirname, "..", "frontend", "dist");
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+  app.use(express.static(frontEndPath));
+
+  app.get("*", (_, res) => {
+    res.sendFile(path.join(frontEndPath, "index.html"));
   });
 }
 
