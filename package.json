@@ -11,9 +11,6 @@
     "type": "git",
     "url": "git+https://github.com/alexpetkoff/chat-app.git"
   },
-  "dependencies": {
-    "express": "^4.21.2"
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
