@@ -6,11 +6,13 @@ const authRoutes = require("./routes/auth.route");
 const messageRoutes = require("./routes/message.route");
 const connectDB = require("./lib/db");
 
-dotenv.config({ path: path.join(__dirname, ".env") }); // point the exact path where the env is located.
+dotenv.config({ path: path.join(__dirname, ".env") });
 
 const PORT = process.env.PORT || 3000;
 
 const app = express();
+
+app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/messages", messageRoutes);
