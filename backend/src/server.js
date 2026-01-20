@@ -4,6 +4,7 @@ const path = require("path");
 
 const authRoutes = require("./routes/auth.route");
 const messageRoutes = require("./routes/message.route");
+const connectDB = require("./lib/db");
 
 dotenv.config({ path: path.join(__dirname, ".env") }); // point the exact path where the env is located.
 
@@ -23,4 +24,7 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.listen(PORT, () => console.log("Server is running on port:", PORT));
+app.listen(PORT, () => {
+  console.log("Server is running on port:", PORT);
+  connectDB();
+});
