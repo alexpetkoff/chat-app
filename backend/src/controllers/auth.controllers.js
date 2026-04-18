@@ -37,6 +37,7 @@ const signup = async (req, res) => {
       password: hashedPassword,
     });
 
+    // This check can be removed because newUser will always exist in memory...
     if (newUser) {
       generateToken(newUser._id, res);
       await newUser.save();
