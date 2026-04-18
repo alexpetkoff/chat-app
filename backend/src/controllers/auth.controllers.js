@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 
 const User = require("../models/user.model");
 const { generateToken } = require("../lib/utils");
+const { sendWelcomeEmail } = require("../emails/emailHandlers");
 
 const signup = async (req, res) => {
   const { fullName, email, password } = req.body;
@@ -48,6 +49,16 @@ const signup = async (req, res) => {
         email: newUser.email,
         profilePicture: newUser.profilePicture,
       });
+
+      try {
+        await sendWelcomeEmail(
+          savedUser.email,
+          savedUser.fullName,
+          savedUser.email, // to change it later with the clientURL of the user...
+        );
+      } catch (error) {
+        console.error("Failed to send welcome email:", error);
+      }
     } else {
       res.status(400).json({ message: "Invalid user data!" });
     }
